@@ -8,6 +8,11 @@
 
 @implementation VENCalculatorInputTextField
 
+-(NSNumberFormatter*)numberFormatter
+{
+    return self.moneyCalculator.numberFormatter;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -22,16 +27,16 @@
 
 - (void)setUpInit {
     self.locale = [NSLocale currentLocale];
-
+    
     VENCalculatorInputView *inputView = [VENCalculatorInputView new];
     inputView.delegate = self;
     inputView.locale = self.locale;
     self.inputView = inputView;
-
+    
     VENMoneyCalculator *moneyCalculator = [VENMoneyCalculator new];
     moneyCalculator.locale = self.locale;
     self.moneyCalculator = moneyCalculator;
-
+    
     [self addTarget:self action:@selector(venCalculatorTextFieldDidEndEditing) forControlEvents:UIControlEventEditingDidEnd];
 }
 
@@ -66,7 +71,7 @@
             return;
         }
     }
-
+    
     [self insertText:key];
     NSString *subString = [self.text substringToIndex:self.text.length - 1];
     if ([key isEqualToString:@"+"] ||
